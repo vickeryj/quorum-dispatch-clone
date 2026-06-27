@@ -38,7 +38,7 @@ qd bootstrap
 - offers shell integration (`eval "$(qd init bash)"`),
 - on a TTY, offers to install the **pinned** `qb` binary and the **pinned** work-model plugin.
 
-Extension install is currently **opt-in**: `SB_BOOTSTRAP_INSTALL_EXTENSIONS=1 qd bootstrap` (default off so
+Extension install is currently **opt-in**: `QD_BOOTSTRAP_INSTALL_EXTENSIONS=1 qd bootstrap` (default off so
 a plain bootstrap never reaches the network unasked — see ADR 0018 / tbd 0002 for the default-on question).
 
 ## 3. What gets installed, and from where
@@ -51,7 +51,7 @@ a plain bootstrap never reaches the network unasked — see ADR 0018 / tbd 0002 
 
 The actual install actions live in [`../scripts/install-extensions.sh`](../scripts/install-extensions.sh)
 (outside `crates/`, so the engine stays content-free per `scope-audit.sh`). `qd bootstrap` invokes it by
-path; a packaged install must stage that script and point `SB_INSTALL_EXTENSIONS_SCRIPT` at it.
+path; a packaged install must stage that script and point `QD_INSTALL_EXTENSIONS_SCRIPT` at it.
 
 ## 4. Validate a pin before tagging (maintainers)
 ```bash
