@@ -13,7 +13,7 @@ rest in [`../extensions.toml`](../extensions.toml).
 
 ```bash
 CARGO_NET_GIT_FETCH_WITH_CLI=true \
-  cargo install --git ssh://git@github.com/private-org/qd-rust.git qd --rev <sha> --locked
+  cargo install --git ssh://git@github.com/private-org/qd-rust.git quorum-dispatch --rev <sha> --locked
 # (once releases are tagged: --tag vX instead of --rev <sha>)
 ```
 

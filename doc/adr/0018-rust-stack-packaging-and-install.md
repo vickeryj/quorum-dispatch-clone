@@ -2,7 +2,7 @@
 
 **Status:** Proposed — **gated** by stress-test findings ([tbd/0002](../tbd/0002-packaging-stress-test-findings.md)); blocked on one design decision (the canonical/merged shape of `plugins/core`) before A/B execute.
 **Date:** 2026-06-16
-**Relates-to:** the retired TS switchboard `qd bootstrap`/`build-dist` design (ADR-0002 of that repo, now archived); qd-rust's existing `bootstrap` + `update` verbs; the existing Stage-1 Homebrew work (`packaging/homebrew/qd.rb`, "A7"); stress-test gate ([tbd/0002](../tbd/0002-packaging-stress-test-findings.md)).
+**Relates-to:** the retired TS switchboard `qd bootstrap`/`build-dist` design (ADR-0002 of that repo, now archived); qd-rust's existing `bootstrap` + `update` verbs; the existing Stage-1 Homebrew work (`packaging/homebrew/quorum-dispatch.rb`, "A7"); stress-test gate ([tbd/0002](../tbd/0002-packaging-stress-test-findings.md)).
 
 ## Context
 
