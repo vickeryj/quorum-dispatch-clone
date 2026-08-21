@@ -9,13 +9,25 @@ rest in [`../extensions.toml`](../extensions.toml).
 - The `claude` CLI on `PATH` (for the work-model plugin install).
 
 ## 1. Install the engine (pinned)
-`qd-rust` is a **virtual workspace**, so the install command needs a package selector:
+`qd-rust` is a **virtual workspace**, so the install command needs a package selector — and it
+needs **two**, because `qd` no longer works alone:
 
 ```bash
 CARGO_NET_GIT_FETCH_WITH_CLI=true \
-  cargo install --git ssh://git@github.com/private-org/qd-rust.git quorum-dispatch --rev <sha> --locked
+  cargo install --git ssh://git@github.com/private-org/qd-rust.git \
+    quorum-dispatch quorum-qw --rev <sha> --locked
 # (once releases are tagged: --tag vX instead of --rev <sha>)
 ```
+
+**Why the second selector.** `qd` delegates session work to a `qw` binary it spawns over stdio, and
+it finds `qw` as a **sibling of its own executable** — never by searching `PATH`, because a `qw` on
+`PATH` could belong to a different install than the running `qd`, which is precisely the version
+skew the wire handshake exists to catch (ADR-0020). Installing `quorum-dispatch` alone therefore
+produces a `qd` that cannot open a lane at all; it fails loudly, naming the path it looked for, and
+never falls back. Both selectors land their binaries in the same `~/.cargo/bin`, from the same
+`--rev`, which is exactly the invariant: **one directory, one install, one pin.** `qw` is not a
+second pin and not a second thing to choose — it is a `[[bin]]` of an in-repo crate, and it has no
+user-facing verbs.
 
 Two non-obvious requirements (both verified the hard way):
 - **`ssh://git@github.com/…`**, not scp-style `git@github.com:…` — cargo's URL parser rejects the
@@ -25,7 +37,8 @@ Two non-obvious requirements (both verified the hard way):
   `failed to authenticate when downloading repository`.
 - The `qd` package selector is required because `qd-rust` is a virtual workspace.
 
-The binary lands at `~/.cargo/bin/qd` — make sure that's on your `PATH`.
+The binaries land at `~/.cargo/bin/qd` and `~/.cargo/bin/qw` — make sure that directory is on your
+`PATH`. You only ever type `qd`; `qw` must be *present*, not reachable by name.
 
 ## 2. Bootstrap
 ```bash
