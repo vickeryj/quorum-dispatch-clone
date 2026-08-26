@@ -8,9 +8,9 @@
 
 The Rust stack is three independently-versioned artifacts in three repos:
 
-- **`qd`** — the engine binary (`private-org/qd-rust`).
-- **`qb`** — the extension binary: obligation/continuity verbs (`private-org/qb`).
-- **plugins** — the work-model content: the `core` plugin pack + substrate (`private-org/plugins`).
+- **`qd`** — the engine binary (`vickeryj/quorum-dispatch-clone`).
+- **`qb`** — the extension binary: obligation/continuity verbs (`vickeryj/qb`).
+- **plugins** — the work-model content: the `core` plugin pack + substrate (`vickeryj/plugins`).
 
 There is currently **no install story**. The whole `bootstrap`/`update`/marketplace machinery lived in
 the TypeScript switchboard, which has been archived. On the Rust side, `qd` is installed by hand
@@ -23,7 +23,7 @@ Two facts shape the decision:
    registration + shell init) and an `update` verb that already detects its install channel
    (*Homebrew or cargo*). What `bootstrap` does **not** yet do is pull/build `qb` or the plugins.
 2. **The content has two homes today.** `qb` still carries `core/`, `code/`, `lab/` plus a
-   `build-dist.sh` and build tooling — *and* `private-org/plugins` already exists, is active, and has
+   `build-dist.sh` and build tooling — *and* `vickeryj/plugins` already exists, is active, and has
    its own `core/`. This duplication has to be resolved before "pin the plugins" means anything.
 
 ## Decision
@@ -40,7 +40,7 @@ that determines the other two.**
    source of truth for "what versions go together."
 3. **`qb` becomes engine-only; plugins is core's sole home.** Strip `core/`/`code/`/`lab/` + the
    build tooling out of `qb` ("kill it with fire"). The work-model content and its build tooling live
-   only in `private-org/plugins`.
+   only in `vickeryj/plugins`.
 4. **`qd bootstrap` grows a consent-gated cascade.** After its existing steps it offers, in order:
    "install `qb`?" → install the pinned `qb`; then "install the core plugin pack?" → clone
    plugins@pinned-ref, build it, wire it into `~/.quorum/dispatch`. Layered: engine-only, +qb, +plugins are all

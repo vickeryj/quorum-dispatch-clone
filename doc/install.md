@@ -5,7 +5,7 @@ rest in [`../extensions.toml`](../extensions.toml).
 
 ## Prerequisites
 - A Rust toolchain (`cargo`).
-- SSH access to the private `private-org` GitHub repos (cargo pulls over SSH).
+- SSH access to the private `vickeryj` GitHub repos (cargo pulls over SSH).
 - The `claude` CLI on `PATH` (for the work-model plugin install).
 
 ## 1. Install the engine (pinned)
@@ -14,7 +14,7 @@ needs **two**, because `qd` no longer works alone:
 
 ```bash
 CARGO_NET_GIT_FETCH_WITH_CLI=true \
-  cargo install --git ssh://git@github.com/private-org/qd-rust.git \
+  cargo install --git ssh://git@github.com/vickeryj/quorum-dispatch-clone.git \
     quorum-dispatch quorum-qw --rev <sha> --locked
 # (once releases are tagged: --tag vX instead of --rev <sha>)
 ```
@@ -55,8 +55,8 @@ Extension install is currently **opt-in**: `QD_BOOTSTRAP_INSTALL_EXTENSIONS=1 qd
 a plain bootstrap never reaches the network unasked — see ADR 0018 / tbd 0002 for the default-on question).
 
 ## 3. What gets installed, and from where
-- **`qb`** binary ← `git@github.com:private-org/qb.git` @ the pinned rev (`cargo install --git … --bin qb`).
-- **work-model plugin** ← `git@github.com:private-org/plugins.git` @ the pinned rev, installed via
+- **`qb`** binary ← `git@github.com:vickeryj/qb.git` @ the pinned rev (`cargo install --git … --bin qb`).
+- **work-model plugin** ← `git@github.com:vickeryj/plugins.git` @ the pinned rev, installed via
   `claude plugin marketplace add … && claude plugin install core@qb`. `plugins/core` is consumed **raw**
   (no build step). The marketplace name (`qb`), plugin (`core`), and version (`0.1.0`) are held stable —
   commissions resolve roles by the cache path `~/.claude/plugins/cache/qb/core/0.1.0/roles/…`, so changing
